@@ -1,7 +1,5 @@
-import { Header } from "../components/Header";
+import { Header } from '../components/Header';
 
-export default function Dashboard(){
-  return(
-    <Header />
-  );
+export default function Dashboard() {
+  return <Header />;
 }
