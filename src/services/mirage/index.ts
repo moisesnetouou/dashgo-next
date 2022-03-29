@@ -31,7 +31,7 @@ export function makeServer() {
     },
 
     seeds(serverSeeds) {
-      serverSeeds.createList('user', 200);
+      serverSeeds.createList('user', 10);
     },
 
     routes() {
