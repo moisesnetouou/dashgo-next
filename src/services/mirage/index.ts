@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { createServer, Model } from 'miragejs';
+import { createServer, Factory, Model } from 'miragejs';
+import faker from '@faker-js/faker';
 
 type User = {
   name: string;
@@ -12,6 +13,25 @@ export function makeServer() {
     models: {
       // quais dados quero armazenar no bd ficticio
       user: Model.extend<Partial<User>>({}),
+    },
+
+    factories: {
+      // gerar dados em massa
+      user: Factory.extend({
+        name(i: number) {
+          return `User ${i + 1}`;
+        },
+        email() {
+          return faker.internet.email().toLowerCase();
+        },
+        createdAt() {
+          return faker.date.recent(10);
+        },
+      }),
+    },
+
+    seeds(serverSeeds) {
+      serverSeeds.createList('user', 200);
     },
 
     routes() {
