@@ -13,7 +13,7 @@ type GetUsersResponse = {
   users: User[];
 };
 
-async function getUsers(page: number): Promise<GetUsersResponse> {
+export async function getUsers(page: number): Promise<GetUsersResponse> {
   const { data, headers } = await api.get('/users', {
     params: {
       page,
