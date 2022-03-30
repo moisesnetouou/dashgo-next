@@ -3,7 +3,7 @@ import { PaginationItem } from './PaginationItem';
 
 interface PaginationProps {
   totalCountOfRegister: number;
-  registersPerPage: number;
+  registersPerPage?: number;
   currentPage?: number;
   onPageChange: (page: number) => void;
 }

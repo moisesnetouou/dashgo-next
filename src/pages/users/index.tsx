@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-shadow */
 /* eslint-disable no-nested-ternary */
@@ -23,7 +24,6 @@ import NextLink from 'next/link';
 import { useState } from 'react';
 
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
-import { QueryClient } from 'react-query';
 
 import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
@@ -45,7 +45,7 @@ export default function UserList() {
     refetch();
   }
 
-  async function handlePrefetchUser(userId: number) {
+  async function handlePrefetchUser(userId: string) {
     await queryClient.prefetchQuery(
       ['user', userId],
       async () => {
