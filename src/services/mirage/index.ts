@@ -1,5 +1,6 @@
+/* eslint-disable func-names */
 /* eslint-disable import/no-extraneous-dependencies */
-import { createServer, Factory, Model } from 'miragejs';
+import { createServer, Factory, Model, Response } from 'miragejs';
 import faker from '@faker-js/faker';
 
 type User = {
@@ -31,7 +32,7 @@ export function makeServer() {
     },
 
     seeds(serverSeeds) {
-      serverSeeds.createList('user', 10);
+      serverSeeds.createList('user', 200);
     },
 
     routes() {
@@ -39,7 +40,28 @@ export function makeServer() {
       this.namespace = 'api';
       this.timing = 750; // delay
 
-      this.get('/users');
+      this.get('/users', function (schema, request) {
+        const { page = 1, per_page = 10 } = request.queryParams;
+
+        const total = schema.all('user').length;
+
+        // 10 - 20
+        const pageStart = (Number(page) - 1) * Number(per_page);
+        const pageEnd = pageStart + Number(per_page);
+
+        const users = this.serialize(schema.all('user')).users.slice(
+          pageStart,
+          pageEnd
+        );
+
+        return new Response(
+          200,
+          {
+            'x-total-count': String(total),
+          },
+          { users }
+        );
+      });
       this.post('/users');
 
       this.namespace = ''; // para não prejudicar a api route do next
